@@ -1,0 +1,27 @@
+plugins {
+    id 'org.spongepowered.plugin' version '0.8.1'
+    id 'maven'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group = 'hdr.glow'
+version = '0.2-Dev'
+
+sponge {
+    plugin {
+        id = 'playerglow'
+        meta {
+            name = "Player Glow"
+            version = rootProject.version
+            authors = ["HDR"]
+            description = "Allows Players to Glow"
+        }
+    }
+}
+
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:5.1.0'
+}
