@@ -10,7 +10,6 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 
-
 @Plugin(id = "playerglow", name = "Player Glow", version = "0.4")
 public class playerGlow {
 
