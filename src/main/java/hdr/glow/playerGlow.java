@@ -10,7 +10,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.4")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.5")
 public class playerGlow {
 
     private void makeCommands() {
@@ -27,7 +27,7 @@ public class playerGlow {
     @Listener
     public void onInit(GameStartedServerEvent e){
         makeCommands();
-        glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(100000).amplifier(100).particles(false).build();
+        glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(100000).amplifier(100).particles(false).ambience(true).build();
     }
 
     }

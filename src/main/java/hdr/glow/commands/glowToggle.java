@@ -12,9 +12,8 @@ import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.text.format.TextColors;
-import java.util.List;
 import static hdr.glow.playerGlow.glowPot;
-
+import java.util.List;
 
 public class glowToggle implements CommandExecutor {
     @Override
@@ -25,6 +24,9 @@ public class glowToggle implements CommandExecutor {
                 List<PotionEffect> potionEffects = player.get(Keys.POTION_EFFECTS).get();
                 for (PotionEffect pot : potionEffects) {
                     if (pot.getType().equals(PotionEffectTypes.GLOWING)) {
+                        List<PotionEffect> effects = player.get(Keys.POTION_EFFECTS).get();
+                        effects.clear();
+                        player.offer(Keys.POTION_EFFECTS, effects);
                         player.sendMessage(Text.of(TextColors.GOLD, "Glow Effect Disabled."));
                     }
 
@@ -34,7 +36,6 @@ public class glowToggle implements CommandExecutor {
                 effects.addElement(glowPot);
                 player.offer(effects);
                 src.sendMessage(Text.of(TextColors.GOLD, "Glow Effect Enabled."));
-                src.sendMessage(Text.of(player.get(Keys.POTION_EFFECTS)));
             }
         }
         return CommandResult.success();
