@@ -1,6 +1,8 @@
 package hdr.glow;
 
 import hdr.glow.commands.glowToggle;
+import org.spongepowered.api.effect.potion.PotionEffect;
+import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -9,7 +11,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.2")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.4")
 public class playerGlow {
 
     private void makeCommands() {
@@ -20,8 +22,14 @@ public class playerGlow {
                 .build();
         Sponge.getCommandManager().register(this, toggleCMD, "toggleglow", "tgw");
     }
+
+    public static PotionEffect glowPot;
+
     @Listener
     public void onInit(GameStartedServerEvent e){
         makeCommands();
+        glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(100000).amplifier(100).particles(false).build();
     }
-}
+
+    }
+
