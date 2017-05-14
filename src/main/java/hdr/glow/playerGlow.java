@@ -1,5 +1,6 @@
 package hdr.glow;
 
+import hdr.glow.commands.glowColor;
 import hdr.glow.commands.glowToggle;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
@@ -15,7 +16,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.format.TextColors;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.8")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.9")
 public class playerGlow {
 
     public static PotionEffect glowPot;
@@ -43,7 +44,46 @@ public class playerGlow {
 
     private void makeCommands() {
         CommandSpec toggleCMD = CommandSpec.builder().description(Text.of("Toggle Glow")).permission("glow.toggle").executor(new glowToggle()).build();
-        Sponge.getCommandManager().register(this, toggleCMD, "toggleglow", "tgw");
+        CommandSpec infoCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color").executor(new glowColor()).build();
+        CommandSpec BlackCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.black").executor(new glowColor()).build();
+        CommandSpec DarkBlueCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkblue").executor(new glowColor()).build();
+        CommandSpec DarkGreenCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkgreen").executor(new glowColor()).build();
+        CommandSpec DarkAquaCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkaqua").executor(new glowColor()).build();
+        CommandSpec DarkRedCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkred").executor(new glowColor()).build();
+        CommandSpec DarkPurpleCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkpurple").executor(new glowColor()).build();
+        CommandSpec GoldCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.gold").executor(new glowColor()).build();
+        CommandSpec GrayCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.gray").executor(new glowColor()).build();
+        CommandSpec DarkGrayCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.darkgray").executor(new glowColor()).build();
+        CommandSpec BlueCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.blue").executor(new glowColor()).build();
+        CommandSpec GreenCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.green").executor(new glowColor()).build();
+        CommandSpec AquaCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.aqua").executor(new glowColor()).build();
+        CommandSpec RedCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.red").executor(new glowColor()).build();
+        CommandSpec LightPurpleCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.lightpurple").executor(new glowColor()).build();
+        CommandSpec YellowCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.yellow").executor(new glowColor()).build();
+        CommandSpec WhiteCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.white").executor(new glowColor()).build();
+        CommandSpec colorCMD = CommandSpec.builder()
+                .description(Text.of(""))
+                .executor(new glowColor())
+                .child(infoCMD, "help", "info")
+                .child(BlackCMD, "black")
+                .child(DarkBlueCMD, "darkblue")
+                .child(DarkGreenCMD, "darkgreen")
+                .child(DarkAquaCMD, "darkaqua")
+                .child(DarkRedCMD, "darkred")
+                .child(DarkPurpleCMD, "darkpurple")
+                .child(GoldCMD, "gold")
+                .child(GrayCMD, "gray")
+                .child(DarkGrayCMD, "darkgray")
+                .child(BlueCMD, "blue")
+                .child(GreenCMD, "green")
+                .child(AquaCMD, "aqua")
+                .child(RedCMD, "red")
+                .child(LightPurpleCMD, "lightpurple")
+                .child(YellowCMD, "yellow")
+                .child(WhiteCMD, "white")
+                .build();
+        Sponge.getCommandManager().register(this, toggleCMD, "tgw");
+        Sponge.getCommandManager().register(this, colorCMD, "glow");
     }
 
     @Listener
@@ -54,6 +94,7 @@ public class playerGlow {
 
     @Listener
     public void onServerStart(GameStartedServerEvent e) {
+        //Wait for server to start then Register teams.
         scoreboard.registerTeam(Black);
         scoreboard.registerTeam(DarkBlue);
         scoreboard.registerTeam(DarkGreen);
@@ -76,7 +117,6 @@ public class playerGlow {
     public void onJoin(ClientConnectionEvent.Join e) {
         Player player = e.getTargetEntity();
         player.setScoreboard(scoreboard);
-
     }
 
 }
