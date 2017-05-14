@@ -16,7 +16,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.format.TextColors;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.9")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.4")
 public class playerGlow {
 
     public static PotionEffect glowPot;
@@ -61,27 +61,7 @@ public class playerGlow {
         CommandSpec LightPurpleCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.lightpurple").executor(new glowColor()).build();
         CommandSpec YellowCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.yellow").executor(new glowColor()).build();
         CommandSpec WhiteCMD = CommandSpec.builder().description(Text.of("")).permission("glow.color.white").executor(new glowColor()).build();
-        CommandSpec colorCMD = CommandSpec.builder()
-                .description(Text.of(""))
-                .executor(new glowColor())
-                .child(infoCMD, "help", "info")
-                .child(BlackCMD, "black")
-                .child(DarkBlueCMD, "darkblue")
-                .child(DarkGreenCMD, "darkgreen")
-                .child(DarkAquaCMD, "darkaqua")
-                .child(DarkRedCMD, "darkred")
-                .child(DarkPurpleCMD, "darkpurple")
-                .child(GoldCMD, "gold")
-                .child(GrayCMD, "gray")
-                .child(DarkGrayCMD, "darkgray")
-                .child(BlueCMD, "blue")
-                .child(GreenCMD, "green")
-                .child(AquaCMD, "aqua")
-                .child(RedCMD, "red")
-                .child(LightPurpleCMD, "lightpurple")
-                .child(YellowCMD, "yellow")
-                .child(WhiteCMD, "white")
-                .build();
+        CommandSpec colorCMD = CommandSpec.builder().description(Text.of("")).executor(new glowColor()).child(infoCMD, "help", "info").child(BlackCMD, "black").child(DarkBlueCMD, "darkblue").child(DarkGreenCMD, "darkgreen").child(DarkAquaCMD, "darkaqua").child(DarkRedCMD, "darkred").child(DarkPurpleCMD, "darkpurple").child(GoldCMD, "gold").child(GrayCMD, "gray").child(DarkGrayCMD, "darkgray").child(BlueCMD, "blue").child(GreenCMD, "green").child(AquaCMD, "aqua").child(RedCMD, "red").child(LightPurpleCMD, "lightpurple").child(YellowCMD, "yellow").child(WhiteCMD, "white").build();
         Sponge.getCommandManager().register(this, toggleCMD, "tgw");
         Sponge.getCommandManager().register(this, colorCMD, "glow");
     }
