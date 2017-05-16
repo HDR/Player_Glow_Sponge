@@ -6,8 +6,8 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
-import static hdr.glow.playerGlow.Black;
 import org.spongepowered.api.text.Text;
+import static hdr.glow.config.glowTeams.*;
 
 public class ColorBlack implements CommandExecutor {
     @Override

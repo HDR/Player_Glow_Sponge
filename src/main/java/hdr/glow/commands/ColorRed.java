@@ -7,7 +7,7 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
-import static hdr.glow.playerGlow.Red;
+import static hdr.glow.config.glowTeams.*;
 
 public class ColorRed implements CommandExecutor {
     @Override
