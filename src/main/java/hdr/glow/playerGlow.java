@@ -14,9 +14,8 @@ import org.spongepowered.api.scoreboard.Team;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.format.TextColors;
-import java.util.List;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.5")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.6")
 public class playerGlow {
 
     public static PotionEffect glowPot;
@@ -25,22 +24,22 @@ public class playerGlow {
     Scoreboard scoreboard = Scoreboard.builder().build();
 
     //Build Teams
-    Team Black = Team.builder().name("Black").prefix(Text.of(TextColors.BLACK)).color(TextColors.BLACK).build();
-    Team DarkBlue = Team.builder().name("DarkBlue").prefix(Text.of(TextColors.DARK_BLUE)).color(TextColors.DARK_BLUE).build();
-    Team DarkGreen = Team.builder().name("DarkGreen").prefix(Text.of(TextColors.DARK_GREEN)).color(TextColors.DARK_GREEN).build();
-    Team DarkAqua = Team.builder().name("DarkAqua").prefix(Text.of(TextColors.DARK_AQUA)).color(TextColors.DARK_AQUA).build();
-    Team DarkRed = Team.builder().name("DarkRed").prefix(Text.of(TextColors.DARK_RED)).color(TextColors.DARK_RED).build();
-    Team DarkPurple = Team.builder().name("DarkPurple").prefix(Text.of(TextColors.DARK_PURPLE)).color(TextColors.DARK_PURPLE).build();
-    Team Gold = Team.builder().name("Orange").prefix(Text.of(TextColors.GOLD)).color(TextColors.GOLD).build();
-    Team Gray = Team.builder().name("Gray").prefix(Text.of(TextColors.GRAY)).color(TextColors.GRAY).build();
-    Team DarkGray = Team.builder().name("DarkGray").prefix(Text.of(TextColors.DARK_GRAY)).color(TextColors.DARK_GRAY).build();
-    Team Blue = Team.builder().name("Blue").prefix(Text.of(TextColors.BLUE)).color(TextColors.BLUE).build();
-    Team Green = Team.builder().name("Green").prefix(Text.of(TextColors.GREEN)).color(TextColors.GREEN).build();
-    Team Aqua = Team.builder().name("Aqua").prefix(Text.of(TextColors.AQUA)).color(TextColors.AQUA).build();
-    Team Red = Team.builder().name("Red").prefix(Text.of(TextColors.RED)).color(TextColors.RED).build();
-    Team LightPurple = Team.builder().name("Pink").prefix(Text.of(TextColors.LIGHT_PURPLE)).color(TextColors.LIGHT_PURPLE).build();
-    Team Yellow = Team.builder().name("Yellow").prefix(Text.of(TextColors.YELLOW)).color(TextColors.YELLOW).build();
-    Team White = Team.builder().name("White").prefix(Text.of(TextColors.WHITE)).color(TextColors.WHITE).build();
+    public static Team Black = Team.builder().name("Black").prefix(Text.of(TextColors.BLACK)).color(TextColors.BLACK).build();
+    public static Team DarkBlue = Team.builder().name("DarkBlue").prefix(Text.of(TextColors.DARK_BLUE)).color(TextColors.DARK_BLUE).build();
+    public static Team DarkGreen = Team.builder().name("DarkGreen").prefix(Text.of(TextColors.DARK_GREEN)).color(TextColors.DARK_GREEN).build();
+    public static Team DarkAqua = Team.builder().name("DarkAqua").prefix(Text.of(TextColors.DARK_AQUA)).color(TextColors.DARK_AQUA).build();
+    public static Team DarkRed = Team.builder().name("DarkRed").prefix(Text.of(TextColors.DARK_RED)).color(TextColors.DARK_RED).build();
+    public static Team DarkPurple = Team.builder().name("DarkPurple").prefix(Text.of(TextColors.DARK_PURPLE)).color(TextColors.DARK_PURPLE).build();
+    public static Team Gold = Team.builder().name("Orange").prefix(Text.of(TextColors.GOLD)).color(TextColors.GOLD).build();
+    public static Team Gray = Team.builder().name("Gray").prefix(Text.of(TextColors.GRAY)).color(TextColors.GRAY).build();
+    public static Team DarkGray = Team.builder().name("DarkGray").prefix(Text.of(TextColors.DARK_GRAY)).color(TextColors.DARK_GRAY).build();
+    public static Team Blue = Team.builder().name("Blue").prefix(Text.of(TextColors.BLUE)).color(TextColors.BLUE).build();
+    public static Team Green = Team.builder().name("Green").prefix(Text.of(TextColors.GREEN)).color(TextColors.GREEN).build();
+    public static Team Aqua = Team.builder().name("Aqua").prefix(Text.of(TextColors.AQUA)).color(TextColors.AQUA).build();
+    public static Team Red = Team.builder().name("Red").prefix(Text.of(TextColors.RED)).color(TextColors.RED).build();
+    public static Team LightPurple = Team.builder().name("Pink").prefix(Text.of(TextColors.LIGHT_PURPLE)).color(TextColors.LIGHT_PURPLE).build();
+    public static Team Yellow = Team.builder().name("Yellow").prefix(Text.of(TextColors.YELLOW)).color(TextColors.YELLOW).build();
+    public static Team White = Team.builder().name("White").prefix(Text.of(TextColors.WHITE)).color(TextColors.WHITE).build();
 
     private void makeCommands() {
         CommandSpec toggleCMD = CommandSpec.builder().description(Text.of("Toggle Glow")).permission("glow.toggle").executor(new glowToggle()).build();
@@ -61,8 +60,7 @@ public class playerGlow {
         CommandSpec LightPurpleCMD = CommandSpec.builder().description(Text.of("Light Purple Glow")).permission("glow.color.lightpurple").executor(new ColorLightPurple()).build();
         CommandSpec YellowCMD = CommandSpec.builder().description(Text.of("Yellow Glow")).permission("glow.color.yellow").executor(new ColorYellow()).build();
         CommandSpec WhiteCMD = CommandSpec.builder().description(Text.of("White Glow")).permission("glow.color.white").executor(new ColorWhite()).build();
-        CommandSpec colorCMD = CommandSpec.builder().description(Text.of("")).executor(new glowColor()).child(infoCMD, "help", "info").child(BlackCMD, "black").child(DarkBlueCMD, "darkblue").child(DarkGreenCMD, "darkgreen").child(DarkAquaCMD, "darkaqua").child(DarkRedCMD, "darkred").child(DarkPurpleCMD, "darkpurple").child(GoldCMD, "gold").child(GrayCMD, "gray").child(DarkGrayCMD, "darkgray").child(BlueCMD, "blue").child(GreenCMD, "green").child(AquaCMD, "aqua").child(RedCMD, "red").child(LightPurpleCMD, "lightpurple").child(YellowCMD, "yellow").child(WhiteCMD, "white").build();
-        Sponge.getCommandManager().register(this, toggleCMD, "tgw");
+        CommandSpec colorCMD = CommandSpec.builder().description(Text.of("")).executor(new glowColor()).child(toggleCMD, "toggle", "tg").child(infoCMD, "help", "info").child(BlackCMD, "black").child(DarkBlueCMD, "darkblue").child(DarkGreenCMD, "darkgreen").child(DarkAquaCMD, "darkaqua").child(DarkRedCMD, "darkred").child(DarkPurpleCMD, "darkpurple").child(GoldCMD, "gold").child(GrayCMD, "gray").child(DarkGrayCMD, "darkgray").child(BlueCMD, "blue").child(GreenCMD, "green").child(AquaCMD, "aqua").child(RedCMD, "red").child(LightPurpleCMD, "lightpurple").child(YellowCMD, "yellow").child(WhiteCMD, "white").build();
         Sponge.getCommandManager().register(this, colorCMD, "glow");
     }
 
