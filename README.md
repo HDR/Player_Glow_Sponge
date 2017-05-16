@@ -46,3 +46,4 @@ glow.color.white | Allows usage of White outline
 
 ## Known Bugs
 Toggling the effect off clears all potion effects.
+Colors are not currently saved over server restarts.
