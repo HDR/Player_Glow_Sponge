@@ -27,7 +27,6 @@ public class glowToggle implements CommandExecutor {
                         List<PotionEffect> effects = player.get(Keys.POTION_EFFECTS).get();
                         effects.clear();
                         player.offer(Keys.POTION_EFFECTS, effects);
-                        player.sendMessage(Text.of(TextColors.GOLD, "Glow Effect Disabled."));
                     }
 
                 }
@@ -35,7 +34,6 @@ public class glowToggle implements CommandExecutor {
                 PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
                 effects.addElement(glowPot);
                 player.offer(effects);
-                src.sendMessage(Text.of(TextColors.GOLD, "Glow Effect Enabled."));
             }
         }
         return CommandResult.success();

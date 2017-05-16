@@ -15,7 +15,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.format.TextColors;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.6")
+@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.7")
 public class playerGlow {
 
     public static PotionEffect glowPot;
