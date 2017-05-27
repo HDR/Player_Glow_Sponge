@@ -2,16 +2,15 @@ package hdr.glow.config;
 
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextActions;
+import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
+import org.spongepowered.api.text.title.Title;
 
 public class GlowStrings {
-    public static String PluginVersion = "0.9.8";
 
     //Pagination
-    public static Text Padding = Text.builder("=").color(TextColors.GOLD).build();
-    public static Text Toggle = Text.builder("Toggle Glow").onClick(TextActions.runCommand("/glow toggle")).color(TextColors.GOLD).onHover(TextActions.showText(Text.of("Toggle Glow on or off"))).style(TextStyles.BOLD).build();
-    public static Text Github = Text.builder("https://github.com/MrHDR/Player_Glow_Sponge").color(TextColors.RED).style(TextStyles.BOLD).build();
+    public static Text Toggle = Text.builder("Toggle Glow").onClick(TextActions.runCommand("/glow toggle")).color(TextColors.GREEN).onHover(TextActions.showText(Text.of("Toggle Glow on or off"))).style(TextStyles.BOLD).build();
     public static Text Black = Text.builder("Glow Black").onClick(TextActions.runCommand("/glow black")).color(TextColors.BLACK).onHover(TextActions.showText(Text.of("Glow Black"))).style(TextStyles.BOLD).build();
     public static Text DarkBlue = Text.builder("Glow Dark Blue").onClick(TextActions.runCommand("/glow darkblue")).color(TextColors.DARK_BLUE).onHover(TextActions.showText(Text.of("Glow Dark Blue"))).style(TextStyles.BOLD).build();
     public static Text DarkGreen = Text.builder("Glow Dark Green").onClick(TextActions.runCommand("/glow darkgreen")).color(TextColors.DARK_GREEN).onHover(TextActions.showText(Text.of("Glow Dark Green"))).style(TextStyles.BOLD).build();
@@ -28,7 +27,4 @@ public class GlowStrings {
     public static Text LightPurple = Text.builder("Glow Light Purple").onClick(TextActions.runCommand("/glow lightpurple")).color(TextColors.LIGHT_PURPLE).onHover(TextActions.showText(Text.of("Glow Light Purple"))).style(TextStyles.BOLD).build();
     public static Text Yellow = Text.builder("Glow Yellow").onClick(TextActions.runCommand("/glow yellow")).color(TextColors.YELLOW).onHover(TextActions.showText(Text.of("Glow Yellow"))).style(TextStyles.BOLD).build();
     public static Text White = Text.builder("Glow White").onClick(TextActions.runCommand("/glow white")).color(TextColors.WHITE).onHover(TextActions.showText(Text.of("Glow White"))).style(TextStyles.BOLD).build();
-
-    //Teams
-
 }

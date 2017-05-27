@@ -7,6 +7,10 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.chat.ChatTypes;
+import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextStyles;
+
 import static hdr.glow.config.glowTeams.*;
 
 public class ColorDarkGray implements CommandExecutor {
@@ -15,6 +19,7 @@ public class ColorDarkGray implements CommandExecutor {
         if (src instanceof Player) {
             Player player = (Player) src;
             DarkGray.addMember(Text.of(player.getName()));
+            player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.DARK_GRAY, TextStyles.BOLD, "Dark Gray Glow Enabled"));
         }
         return CommandResult.success();
     }

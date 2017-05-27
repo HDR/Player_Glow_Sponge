@@ -1,6 +1,5 @@
 package hdr.glow.commands;
 
-import hdr.glow.config.GlowStrings;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -20,10 +19,9 @@ public class glowColor implements CommandExecutor {
         if (src instanceof Player) {
             Player player = (Player) src;
             PaginationList.builder()
-                    .title(Text.of(TextStyles.BOLD, "Player Glow ", TextColors.GOLD, GlowStrings.PluginVersion, TextColors.WHITE, " By ", TextColors.GOLD, "HDR "))
+                    .title(Text.of(TextStyles.BOLD, TextColors.GREEN, "Player Glow 0.9.9 By HDR"))
                     .contents(Toggle, Black, DarkBlue, DarkGreen, DarkAqua, DarkRed, DarkPurple, Gold, Gray, DarkGray, Blue, Green, Aqua, Red, LightPurple, Yellow, White)
-                    .header(Github)
-                    .padding(Padding)
+                    .padding(Text.of("="))
                     .sendTo(player);
         }
         return CommandResult.success();

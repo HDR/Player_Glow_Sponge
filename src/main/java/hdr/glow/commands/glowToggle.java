@@ -11,7 +11,10 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
+import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextStyles;
+
 import static hdr.glow.playerGlow.glowPot;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class glowToggle implements CommandExecutor {
                         List<PotionEffect> effects = player.get(Keys.POTION_EFFECTS).get();
                         effects.clear();
                         player.offer(Keys.POTION_EFFECTS, effects);
+                        player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.RED, TextStyles.BOLD, "Glow Disabled"));
                     }
 
                 }
@@ -34,6 +38,7 @@ public class glowToggle implements CommandExecutor {
                 PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
                 effects.addElement(glowPot);
                 player.offer(effects);
+                player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.GREEN, TextStyles.BOLD, "Glow Enabled"));
             }
         }
         return CommandResult.success();
