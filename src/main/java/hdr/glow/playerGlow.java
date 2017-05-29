@@ -1,7 +1,7 @@
 package hdr.glow;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import hdr.glow.config.FileMethods;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.living.player.Player;
@@ -12,28 +12,19 @@ import org.spongepowered.api.event.world.SaveWorldEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Scoreboard;
-import org.spongepowered.api.scoreboard.Team;
-import org.spongepowered.api.text.Text;
 import static hdr.glow.config.glowTeams.*;
 import static hdr.glow.commands.CommandList.*;
-import java.util.*;
+import java.io.IOException;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "0.9.9")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0-Dev")
 public class playerGlow {
 
     public static PotionEffect glowPot;
-    //Build Scoreboard
     public static Scoreboard scoreboard = Scoreboard.builder().build();
-
-    //Build Commands
     private void makeCommands() {
         Sponge.getCommandManager().register(this, colorCMD, "glow");
     }
-
-    //List for saving colors over restart
-    public static Map<UUID, Team> playerList = new HashMap<>();
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+    public static JsonObject json = new JsonObject();
 
     @Listener
     public void onInit(GameStartedServerEvent e) {
@@ -43,7 +34,6 @@ public class playerGlow {
 
     @Listener
     public void onServerStart(GameStartedServerEvent e) {
-        //Wait for server to start then Register teams.
         scoreboard.registerTeam(Black);
         scoreboard.registerTeam(DarkBlue);
         scoreboard.registerTeam(DarkGreen);
@@ -66,8 +56,15 @@ public class playerGlow {
     public void onJoin(ClientConnectionEvent.Join e) {
         Player player = e.getTargetEntity();
         player.setScoreboard(scoreboard);
-        if (playerList.containsKey(Text.of(player.getName()))) {
-            Black.addMember(Text.of(player.getName()));
+    }
+
+    @Listener
+    public void onSave(SaveWorldEvent e) {
+        String jstring = json.toString();
+        try {
+            FileMethods.create("config/playerglow", "colorData.json", jstring);
+        } catch (IOException d) {
+
         }
     }
 }

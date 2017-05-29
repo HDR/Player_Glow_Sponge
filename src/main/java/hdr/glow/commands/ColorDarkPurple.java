@@ -12,12 +12,16 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 
 import static hdr.glow.config.glowTeams.*;
+import static hdr.glow.playerGlow.json;
 
 public class ColorDarkPurple implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             Player player = (Player) src;
+            String uuid = player.getUniqueId().toString();
+            String color = "DarkPurple";
+            json.addProperty(uuid, color);
             DarkPurple.addMember(Text.of(player.getName()));
             player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.DARK_PURPLE, TextStyles.BOLD, "Dark Purple Glow Enabled"));
         }

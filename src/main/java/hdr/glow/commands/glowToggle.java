@@ -16,6 +16,7 @@ import org.spongepowered.api.text.format.TextStyles;
 import static hdr.glow.playerGlow.glowPot;
 
 public class glowToggle implements CommandExecutor {
+
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {

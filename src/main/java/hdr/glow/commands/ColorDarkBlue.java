@@ -12,12 +12,16 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 
 import static hdr.glow.config.glowTeams.*;
+import static hdr.glow.playerGlow.json;
 
 public class ColorDarkBlue implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
         if (src instanceof Player) {
             Player player = (Player) src;
+            String uuid = player.getUniqueId().toString();
+            String color = "DarkBlue";
+            json.addProperty(uuid, color);
             DarkBlue.addMember(Text.of(player.getName()));
             player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.DARK_BLUE, TextStyles.BOLD, "Dark Blue Glow Enabled"));
         }

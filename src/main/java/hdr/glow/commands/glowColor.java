@@ -19,7 +19,7 @@ public class glowColor implements CommandExecutor {
         if (src instanceof Player) {
             Player player = (Player) src;
             PaginationList.builder()
-                    .title(Text.of(TextStyles.BOLD, TextColors.GREEN, "Player Glow 0.9.9 By HDR"))
+                    .title(Text.of(TextStyles.BOLD, TextColors.GREEN, "Player Glow 1.0.0-Dev By HDR"))
                     .contents(Toggle, Black, DarkBlue, DarkGreen, DarkAqua, DarkRed, DarkPurple, Gold, Gray, DarkGray, Blue, Green, Aqua, Red, LightPurple, Yellow, White)
                     .padding(Text.of("="))
                     .sendTo(player);
