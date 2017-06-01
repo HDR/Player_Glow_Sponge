@@ -1,7 +1,6 @@
 # Player Glow
 A simple plugin that adds A glowing outline in various colors to players.
 
-**Please note that this plugin is in Beta, it may contain bugs.**
 
 ## Features
 A clickable menu in chat that lets you select colors and toggle the effect on or off.
@@ -45,8 +44,10 @@ glow.color.yellow | Allows usage of Yellow outline
 glow.color.white | Allows usage of White outline
 
 ## Known Bugs
-Toggling the effect off clears all potion effects.
+Currently not compatible with EasyScoreboards
 
-Colors are not currently saved over server restarts.
+Glow effect seems to flicker on and off when using certain Sponge builds.
 
-On SpongeVanilla the Glow effect seems to flicker.
+## Known Bugs with Mods
+
+The glow effect will not work while wearing a Draconic Helmet.
