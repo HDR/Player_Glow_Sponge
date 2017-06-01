@@ -12,4 +12,6 @@ public class FileMethods {
         file.write(text);
         file.close();
     }
+
+
 }

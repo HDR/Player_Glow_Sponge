@@ -18,7 +18,7 @@ import java.io.IOException;
 import static hdr.glow.config.glowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0-Dev")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0")
 public class playerGlow {
 
     public static Scoreboard scoreboard = Scoreboard.builder().build();
@@ -41,13 +41,71 @@ public class playerGlow {
         String PlayerID = player.getUniqueId().toString();
         if (ColorData.has(PlayerID)) {
             String PlayerColor = ColorData.get(PlayerID).toString();
-            if (PlayerColor.equals("\"Aqua\"")){
-                Aqua.addMember(Text.of(player.getName()));
-                ColorData.addProperty(PlayerID, "Aqua");
-            }
-            if (PlayerColor.equals("\"Black\"")){
-                Black.addMember(Text.of(player.getName()));
-                ColorData.addProperty(PlayerID, "Black");
+            switch(PlayerColor) {
+                case "\"Aqua\"":
+                    Aqua.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Aqua");
+                    break;
+                case "\"Black\"":
+                    Black.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Black");
+                    break;
+                case "\"Blue\"":
+                    Blue.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Blue");
+                    break;
+                case "\"DarkAqua\"":
+                    DarkAqua.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkAqua");
+                    break;
+                case "\"DarkBlue\"":
+                    DarkBlue.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkBlue");
+                    break;
+                case "\"DarkGray\"":
+                    DarkGray.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkGray");
+                    break;
+                case "\"DarkGreen\"":
+                    DarkGreen.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkGreen");
+                    break;
+                case "\"DarkPurple\"":
+                    DarkPurple.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkPurple");
+                    break;
+                case "\"DarkRed\"":
+                    DarkRed.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "DarkRed");
+                    break;
+                case "\"Gold\"":
+                    Gold.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Gold");
+                    break;
+                case "\"Gray\"":
+                    Gray.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Gray");
+                    break;
+                case "\"Green\"":
+                    Green.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Green");
+                    break;
+                case "\"LightPurple\"":
+                    LightPurple.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "LightPurple");
+                    break;
+                case "\"Red\"":
+                    Red.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Red");
+                    break;
+                case "\"White\"":
+                    White.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "White");
+                    break;
+                case "\"Yellow\"":
+                    Yellow.addMember(Text.of(player.getName()));
+                    ColorData.addProperty(PlayerID, "Yellow");
+                    break;
             }
         }
     }
