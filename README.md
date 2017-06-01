@@ -5,7 +5,7 @@ A simple plugin that adds A glowing outline in various colors to players.
 
 ## Features
 A clickable menu in chat that lets you select colors and toggle the effect on or off.
-![Menu](http://i.imgur.com/RTBvyEn.png)
+![Menu](http://i.imgur.com/3kkx1tm.png)
 
 Permission nodes for each color.
 
