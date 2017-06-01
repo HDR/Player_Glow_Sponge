@@ -1,4 +1,5 @@
 package hdr.glow.config;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +10,6 @@ public class FileMethods {
         dir.mkdirs();
         FileWriter file = new FileWriter(new File(dir, name));
         file.write(text);
-        file.flush();
         file.close();
     }
 }

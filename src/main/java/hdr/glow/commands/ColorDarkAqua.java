@@ -10,9 +10,8 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
-
 import static hdr.glow.config.glowTeams.*;
-import static hdr.glow.playerGlow.json;
+import static hdr.glow.playerGlow.ColorData;
 
 public class ColorDarkAqua implements CommandExecutor {
     @Override
@@ -21,7 +20,7 @@ public class ColorDarkAqua implements CommandExecutor {
             Player player = (Player) src;
             String uuid = player.getUniqueId().toString();
             String color = "DarkAqua";
-            json.addProperty(uuid, color);
+            ColorData.addProperty(uuid, color);
             DarkAqua.addMember(Text.of(player.getName()));
             player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.DARK_AQUA, TextStyles.BOLD, "Dark Aqua Glow Enabled"));
         }

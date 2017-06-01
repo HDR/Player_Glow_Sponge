@@ -10,9 +10,8 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
-
 import static hdr.glow.config.glowTeams.*;
-import static hdr.glow.playerGlow.json;
+import static hdr.glow.playerGlow.ColorData;
 
 public class ColorLightPurple implements CommandExecutor {
     @Override
@@ -21,7 +20,7 @@ public class ColorLightPurple implements CommandExecutor {
             Player player = (Player) src;
             String uuid = player.getUniqueId().toString();
             String color = "LightPurple";
-            json.addProperty(uuid, color);
+            ColorData.addProperty(uuid, color);
             LightPurple.addMember(Text.of(player.getName()));
             player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.LIGHT_PURPLE, TextStyles.BOLD, "Light Purple Glow Enabled"));
         }

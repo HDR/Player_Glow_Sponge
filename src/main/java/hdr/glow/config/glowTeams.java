@@ -4,6 +4,8 @@ import org.spongepowered.api.scoreboard.Team;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
+import static hdr.glow.playerGlow.scoreboard;
+
 public class glowTeams {
     public static Team Black = Team.builder().name("Black").prefix(Text.of(TextColors.BLACK)).color(TextColors.BLACK).build();
     public static Team DarkBlue = Team.builder().name("DarkBlue").prefix(Text.of(TextColors.DARK_BLUE)).color(TextColors.DARK_BLUE).build();
@@ -21,4 +23,23 @@ public class glowTeams {
     public static Team LightPurple = Team.builder().name("Pink").prefix(Text.of(TextColors.LIGHT_PURPLE)).color(TextColors.LIGHT_PURPLE).build();
     public static Team Yellow = Team.builder().name("Yellow").prefix(Text.of(TextColors.YELLOW)).color(TextColors.YELLOW).build();
     public static Team White = Team.builder().name("White").prefix(Text.of(TextColors.WHITE)).color(TextColors.WHITE).build();
+
+    public static void registerTeams(){
+        scoreboard.registerTeam(Black);
+        scoreboard.registerTeam(DarkBlue);
+        scoreboard.registerTeam(DarkGreen);
+        scoreboard.registerTeam(DarkAqua);
+        scoreboard.registerTeam(DarkRed);
+        scoreboard.registerTeam(DarkPurple);
+        scoreboard.registerTeam(Gold);
+        scoreboard.registerTeam(Gray);
+        scoreboard.registerTeam(DarkGray);
+        scoreboard.registerTeam(Blue);
+        scoreboard.registerTeam(Green);
+        scoreboard.registerTeam(Aqua);
+        scoreboard.registerTeam(Red);
+        scoreboard.registerTeam(LightPurple);
+        scoreboard.registerTeam(Yellow);
+        scoreboard.registerTeam(White);
+    }
 }

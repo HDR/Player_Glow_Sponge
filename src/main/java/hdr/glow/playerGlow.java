@@ -1,9 +1,8 @@
 package hdr.glow;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import hdr.glow.config.FileMethods;
-import org.spongepowered.api.effect.potion.PotionEffect;
-import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
@@ -12,59 +11,63 @@ import org.spongepowered.api.event.world.SaveWorldEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Scoreboard;
+import org.spongepowered.api.text.Text;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import static hdr.glow.config.glowTeams.*;
 import static hdr.glow.commands.CommandList.*;
-import java.io.IOException;
 
 @Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0-Dev")
 public class playerGlow {
 
-    public static PotionEffect glowPot;
     public static Scoreboard scoreboard = Scoreboard.builder().build();
-    private void makeCommands() {
-        Sponge.getCommandManager().register(this, colorCMD, "glow");
-    }
-    public static JsonObject json = new JsonObject();
+    public static JsonObject ColorData;
+    private void makeCommands() {Sponge.getCommandManager().register(this, colorCMD, "glow");}
 
     @Listener
     public void onInit(GameStartedServerEvent e) {
+        readJson();
         makeCommands();
-        glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(100000).amplifier(100).particles(false).ambience(true).build();
     }
 
     @Listener
-    public void onServerStart(GameStartedServerEvent e) {
-        scoreboard.registerTeam(Black);
-        scoreboard.registerTeam(DarkBlue);
-        scoreboard.registerTeam(DarkGreen);
-        scoreboard.registerTeam(DarkAqua);
-        scoreboard.registerTeam(DarkRed);
-        scoreboard.registerTeam(DarkPurple);
-        scoreboard.registerTeam(Gold);
-        scoreboard.registerTeam(Gray);
-        scoreboard.registerTeam(DarkGray);
-        scoreboard.registerTeam(Blue);
-        scoreboard.registerTeam(Green);
-        scoreboard.registerTeam(Aqua);
-        scoreboard.registerTeam(Red);
-        scoreboard.registerTeam(LightPurple);
-        scoreboard.registerTeam(Yellow);
-        scoreboard.registerTeam(White);
-    }
+    public void onServerStart(GameStartedServerEvent e) {registerTeams();}
 
     @Listener
     public void onJoin(ClientConnectionEvent.Join e) {
         Player player = e.getTargetEntity();
         player.setScoreboard(scoreboard);
+        String PlayerID = player.getUniqueId().toString();
+        if (ColorData.has(PlayerID)) {
+            String PlayerColor = ColorData.get(PlayerID).toString();
+            if (PlayerColor.equals("\"Aqua\"")){
+                Aqua.addMember(Text.of(player.getName()));
+                ColorData.addProperty(PlayerID, "Aqua");
+            }
+            if (PlayerColor.equals("\"Black\"")){
+                Black.addMember(Text.of(player.getName()));
+                ColorData.addProperty(PlayerID, "Black");
+            }
+        }
     }
 
     @Listener
     public void onSave(SaveWorldEvent e) {
-        String jstring = json.toString();
+        String jstring = ColorData.toString();
         try {
             FileMethods.create("config/playerglow", "colorData.json", jstring);
-        } catch (IOException d) {
-
+        } catch (IOException e1) {
         }
+    }
+
+    private static void readJson() {
+        Gson gson = new Gson();
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("config/playerglow/colorData.json"));
+            ColorData = gson.fromJson(br, JsonObject.class);
+        } catch (IOException e2) {}
     }
 }

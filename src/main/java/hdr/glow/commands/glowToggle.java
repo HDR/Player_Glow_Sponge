@@ -12,8 +12,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
-
-import static hdr.glow.playerGlow.glowPot;
+import static hdr.glow.config.GlowStrings.glowPot;
 
 public class glowToggle implements CommandExecutor {
 
