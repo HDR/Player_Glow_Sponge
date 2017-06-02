@@ -12,9 +12,9 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.text.Text;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
+
 import static hdr.glow.config.glowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
@@ -27,7 +27,8 @@ public class playerGlow {
 
     @Listener
     public void onInit(GameStartedServerEvent e) {
-        readJson();
+        CreateJson();
+        ReadJson();
         makeCommands();
     }
 
@@ -119,9 +120,18 @@ public class playerGlow {
         }
     }
 
-    private static void readJson() {
-        Gson gson = new Gson();
+    private static void CreateJson() {
+        String CreateString = "{}";
+        File file = new File("config/playerglow/colorData.json");
+        if (!file.exists()) {
+            try {
+                FileMethods.create("config/playerglow", "colorData.json", CreateString);
+            } catch (IOException e1) {}
+        }
+    }
 
+    private static void ReadJson() {
+        Gson gson = new Gson();
         try {
             BufferedReader br = new BufferedReader(
                     new FileReader("config/playerglow/colorData.json"));

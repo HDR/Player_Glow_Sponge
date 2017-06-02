@@ -10,8 +10,7 @@ public class FileMethods {
         dir.mkdirs();
         FileWriter file = new FileWriter(new File(dir, name));
         file.write(text);
+        file.flush();
         file.close();
     }
-
-
 }

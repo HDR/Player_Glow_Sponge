@@ -19,7 +19,7 @@ public class ColorGold implements CommandExecutor {
         if (src instanceof Player) {
             Player player = (Player) src;
             String uuid = player.getUniqueId().toString();
-            String color = "DarkGold";
+            String color = "Gold";
             ColorData.addProperty(uuid, color);
             Gold.addMember(Text.of(player.getName()));
             player.sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.GOLD, TextStyles.BOLD, "GOLD Glow Enabled"));
