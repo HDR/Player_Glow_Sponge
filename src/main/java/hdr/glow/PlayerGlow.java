@@ -107,6 +107,7 @@ public class PlayerGlow {
                     Yellow.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Yellow");
                     break;
+                default: break;
             }
         }
     }
