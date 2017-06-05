@@ -10,8 +10,8 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.chat.ChatTypes;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
-import static hdr.glow.config.glowTeams.*;
-import static hdr.glow.playerGlow.ColorData;
+import static hdr.glow.config.GlowTeams.*;
+import static hdr.glow.PlayerGlow.ColorData;
 
 public class ColorLightPurple implements CommandExecutor {
     @Override

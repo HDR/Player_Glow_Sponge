@@ -14,7 +14,7 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 import static hdr.glow.config.GlowStrings.glowPot;
 
-public class glowToggle implements CommandExecutor {
+public class GlowToggle implements CommandExecutor {
 
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {

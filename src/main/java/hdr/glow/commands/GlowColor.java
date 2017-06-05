@@ -12,7 +12,7 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 import static hdr.glow.config.GlowStrings.*;
 
-public class glowColor implements CommandExecutor {
+public class GlowColor implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 

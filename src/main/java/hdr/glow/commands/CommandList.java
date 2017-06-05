@@ -4,8 +4,8 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.Text;
 
 public class CommandList {
-    public static CommandSpec toggleCMD = CommandSpec.builder().description(Text.of("Toggle Glow")).permission("glow.toggle").executor(new glowToggle()).build();
-    public static CommandSpec infoCMD = CommandSpec.builder().description(Text.of("Info Command")).permission("glow.color").executor(new glowColor()).build();
+    public static CommandSpec toggleCMD = CommandSpec.builder().description(Text.of("Toggle Glow")).permission("glow.toggle").executor(new GlowToggle()).build();
+    public static CommandSpec infoCMD = CommandSpec.builder().description(Text.of("Info Command")).permission("glow.color").executor(new GlowColor()).build();
     public static CommandSpec BlackCMD = CommandSpec.builder().description(Text.of("Black Glow")).permission("glow.color.black").executor(new ColorBlack()).build();
     public static CommandSpec DarkBlueCMD = CommandSpec.builder().description(Text.of("Dark Blue Glow")).permission("glow.color.darkblue").executor(new ColorDarkBlue()).build();
     public static CommandSpec DarkGreenCMD = CommandSpec.builder().description(Text.of("Dark Green Glow")).permission("glow.color.darkgreen").executor(new ColorDarkGreen()).build();
@@ -22,5 +22,5 @@ public class CommandList {
     public static CommandSpec LightPurpleCMD = CommandSpec.builder().description(Text.of("Light Purple Glow")).permission("glow.color.lightpurple").executor(new ColorLightPurple()).build();
     public static CommandSpec YellowCMD = CommandSpec.builder().description(Text.of("Yellow Glow")).permission("glow.color.yellow").executor(new ColorYellow()).build();
     public static CommandSpec WhiteCMD = CommandSpec.builder().description(Text.of("White Glow")).permission("glow.color.white").executor(new ColorWhite()).build();
-    public static CommandSpec colorCMD = CommandSpec.builder().description(Text.of("")).executor(new glowColor()).child(toggleCMD, "toggle", "tg").child(infoCMD, "help", "info").child(BlackCMD, "black").child(DarkBlueCMD, "darkblue").child(DarkGreenCMD, "darkgreen").child(DarkAquaCMD, "darkaqua").child(DarkRedCMD, "darkred").child(DarkPurpleCMD, "darkpurple").child(GoldCMD, "gold").child(GrayCMD, "gray").child(DarkGrayCMD, "darkgray").child(BlueCMD, "blue").child(GreenCMD, "green").child(AquaCMD, "aqua").child(RedCMD, "red").child(LightPurpleCMD, "lightpurple").child(YellowCMD, "yellow").child(WhiteCMD, "white").permission("glow.menu").build();
+    public static CommandSpec colorCMD = CommandSpec.builder().description(Text.of("")).executor(new GlowColor()).child(toggleCMD, "toggle", "tg").child(infoCMD, "help", "info").child(BlackCMD, "black").child(DarkBlueCMD, "darkblue").child(DarkGreenCMD, "darkgreen").child(DarkAquaCMD, "darkaqua").child(DarkRedCMD, "darkred").child(DarkPurpleCMD, "darkpurple").child(GoldCMD, "gold").child(GrayCMD, "gray").child(DarkGrayCMD, "darkgray").child(BlueCMD, "blue").child(GreenCMD, "green").child(AquaCMD, "aqua").child(RedCMD, "red").child(LightPurpleCMD, "lightpurple").child(YellowCMD, "yellow").child(WhiteCMD, "white").permission("glow.menu").build();
 }

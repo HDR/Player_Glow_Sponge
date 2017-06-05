@@ -15,11 +15,11 @@ import org.spongepowered.api.text.Text;
 
 import java.io.*;
 
-import static hdr.glow.config.glowTeams.*;
+import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
 @Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0")
-public class playerGlow {
+public class PlayerGlow {
 
     public static Scoreboard scoreboard = Scoreboard.builder().build();
     public static JsonObject ColorData;
@@ -27,8 +27,8 @@ public class playerGlow {
 
     @Listener
     public void onInit(GameStartedServerEvent e) {
-        CreateJson();
-        ReadJson();
+        createJson();
+        readJson();
         makeCommands();
     }
 
@@ -120,7 +120,7 @@ public class playerGlow {
         }
     }
 
-    private static void CreateJson() {
+    private static void createJson() {
         String CreateString = "{}";
         File file = new File("config/playerglow/colorData.json");
         if (!file.exists()) {
@@ -130,7 +130,7 @@ public class playerGlow {
         }
     }
 
-    private static void ReadJson() {
+    private static void readJson() {
         Gson gson = new Gson();
         try {
             BufferedReader br = new BufferedReader(
