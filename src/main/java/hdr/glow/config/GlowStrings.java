@@ -27,5 +27,5 @@ public class GlowStrings {
     public static Text LightPurple = Text.builder("Glow Light Purple").onClick(TextActions.runCommand("/glow lightpurple")).color(TextColors.LIGHT_PURPLE).onHover(TextActions.showText(Text.of("Glow Light Purple"))).style(TextStyles.BOLD).build();
     public static Text Yellow = Text.builder("Glow Yellow").onClick(TextActions.runCommand("/glow yellow")).color(TextColors.YELLOW).onHover(TextActions.showText(Text.of("Glow Yellow"))).style(TextStyles.BOLD).build();
     public static Text White = Text.builder("Glow White").onClick(TextActions.runCommand("/glow white")).color(TextColors.WHITE).onHover(TextActions.showText(Text.of("Glow White"))).style(TextStyles.BOLD).build();
-    public static PotionEffect glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(100000).amplifier(100).particles(false).ambience(true).build();
+    public static PotionEffect glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(10000000).amplifier(100).particles(false).ambience(true).build();
 }
