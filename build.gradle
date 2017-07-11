@@ -7,7 +7,7 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 group = 'hdr.glow'
-version = '1.0.0'
+version = '1.0.1'
 
 sponge {
     plugin {
@@ -20,7 +20,6 @@ sponge {
         }
     }
 }
-
 
 dependencies {
     compile 'org.spongepowered:spongeapi:6.0.0'

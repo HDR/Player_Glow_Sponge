@@ -1,7 +1,7 @@
 package hdr.glow;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import hdr.glow.config.FileMethods;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -18,7 +18,7 @@ import java.io.*;
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.0")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.1")
 public class PlayerGlow {
 
     public static Scoreboard scoreboard = Scoreboard.builder().build();
@@ -41,69 +41,69 @@ public class PlayerGlow {
         player.setScoreboard(scoreboard);
         String PlayerID = player.getUniqueId().toString();
         if (ColorData.has(PlayerID)) {
-            String PlayerColor = ColorData.get(PlayerID).toString();
+            String PlayerColor = ColorData.get(PlayerID).getAsString();
             switch(PlayerColor) {
-                case "\"Aqua\"":
+                case "Aqua":
                     Aqua.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Aqua");
                     break;
-                case "\"Black\"":
+                case "Black":
                     Black.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Black");
                     break;
-                case "\"Blue\"":
+                case "Blue":
                     Blue.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Blue");
                     break;
-                case "\"DarkAqua\"":
+                case "DarkAqua":
                     DarkAqua.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkAqua");
                     break;
-                case "\"DarkBlue\"":
+                case "DarkBlue":
                     DarkBlue.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkBlue");
                     break;
-                case "\"DarkGray\"":
+                case "DarkGray":
                     DarkGray.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkGray");
                     break;
-                case "\"DarkGreen\"":
+                case "DarkGreen":
                     DarkGreen.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkGreen");
                     break;
-                case "\"DarkPurple\"":
+                case "DarkPurple":
                     DarkPurple.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkPurple");
                     break;
-                case "\"DarkRed\"":
+                case "DarkRed":
                     DarkRed.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "DarkRed");
                     break;
-                case "\"Gold\"":
+                case "Gold":
                     Gold.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Gold");
                     break;
-                case "\"Gray\"":
+                case "Gray":
                     Gray.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Gray");
                     break;
-                case "\"Green\"":
+                case "Green":
                     Green.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Green");
                     break;
-                case "\"LightPurple\"":
+                case "LightPurple":
                     LightPurple.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "LightPurple");
                     break;
-                case "\"Red\"":
+                case "Red":
                     Red.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Red");
                     break;
-                case "\"White\"":
+                case "White":
                     White.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "White");
                     break;
-                case "\"Yellow\"":
+                case "Yellow":
                     Yellow.addMember(Text.of(player.getName()));
                     ColorData.addProperty(PlayerID, "Yellow");
                     break;
@@ -132,11 +132,10 @@ public class PlayerGlow {
     }
 
     private static void readJson() {
-        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
         try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader("config/playerglow/colorData.json"));
-            ColorData = gson.fromJson(br, JsonObject.class);
+            Object obj = parser.parse(new FileReader("config/playerglow/colorData.json"));
+            ColorData = (JsonObject) obj;
         } catch (IOException e2) {}
     }
 }
