@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hdr.glow.iml" filepath="$PROJECT_DIR$/.idea/modules/hdr.glow.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hdr.glow_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hdr.glow_main.iml" group="hdr.glow" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hdr.glow_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hdr.glow_test.iml" group="hdr.glow" />
+      <module fileurl="file://G:\IdeaProjects\hdr.glow\.idea\modules\hdr.glow_test.iml" filepath="G:\IdeaProjects\hdr.glow\.idea\modules\hdr.glow_test.iml" group="hdr.glow" />
     </modules>
   </component>
 </project>

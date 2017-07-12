@@ -12,9 +12,7 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.text.Text;
-
 import java.io.*;
-
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
