@@ -23,4 +23,6 @@ sponge {
 
 dependencies {
     compile 'org.spongepowered:spongeapi:6.0.0'
+    compile files("lib/VSD-MinecraftStubs.jar")
+    compile files("lib/GlowFix-1.10.2.jar")
 }
