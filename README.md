@@ -46,8 +46,6 @@ glow.color.white | Allows usage of White outline
 ## Known Bugs
 Currently not compatible with EasyScoreboards
 
-Glow effect seems to flicker on and off when using certain Sponge builds.
-
 ## Known Bugs with Mods
 
 The glow effect will not work while wearing a Draconic Helmet.
