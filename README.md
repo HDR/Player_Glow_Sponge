@@ -20,7 +20,8 @@ Command | Description
 
 Permission  | Description
 ------------- | -------------
-glow.toggle  | Toggle effect on or off
+glow.use | Allows usage of /glow
+glow.toggle  | Allows usage of effect toggle
 glow.colors  | Allows usage of all colors
 glow.color.black | Allows usage of Black outline
 glow.color.darkblue | Allows usage Dark Blue outline

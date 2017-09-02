@@ -48,7 +48,7 @@ public class PlayerGlow {
 
 		CommandSpec glow = CommandSpec.builder()
 				.description(Text.of(TextColors.GREEN, "Change your glow color"))
-				.permission("playerglow.command.color")
+				.permission("glow.use")
 				.arguments(
 						GenericArguments.optional(GenericArguments.choices(Text.of("color"), choices))
 				)
