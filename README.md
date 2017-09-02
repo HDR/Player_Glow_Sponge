@@ -1,31 +1,28 @@
-# Player Glow
-A simple plugin that adds A glowing outline in various colors to players.
+# Player Glow - Sponge
+A simple plugin that adds a glowing outline in various colors to players.
 
 
 ## Features
-A clickable menu in chat that lets you select colors and toggle the effect on or off.
-![Menu](http://i.imgur.com/3kkx1tm.png)
+A glow effect for players, which can be toggled on or off. Players may choose colors based on permissions and notification will appear when the glow effect is toggled.
 
 Permission nodes for each color.
 
 ## Commands
 Command | Description
 ------------- | -------------
-/glow | opens menu
-/glow toggle | toggles glow
-/glow colorname | sets glow color
+/glow | toggles glow
+/glow <color> | sets glow color (press TAB for choices)
 
-## Video
-
-[![Video](https://img.youtube.com/vi/YROZiNkBh1E/0.jpg)](https://www.youtube.com/watch?v=YROZiNkBh1E)
+## Screenshot
+![Glow](https://i.imgur.com/OF01znl.png)
 
 ## Permissions
 
 Permission  | Description
 ------------- | -------------
-glow.toggle  | Toggle effect on or off
-glow.menu | Gives access to the menu
-glow.color  | Allows changing colors
+glow.use | Allows usage of /glow
+glow.toggle  | Allows usage of effect toggle
+glow.colors  | Allows usage of all colors
 glow.color.black | Allows usage of Black outline
 glow.color.darkblue | Allows usage Dark Blue outline
 glow.color.darkgreen | Allows usage of Dark Green outline
@@ -43,11 +40,8 @@ glow.color.lightpurple | Allows usage of Light Purple outline
 glow.color.yellow | Allows usage of Yellow outline
 glow.color.white | Allows usage of White outline
 
-## Known Bugs
-Currently not compatible with EasyScoreboards
+## Plugin Conflicts
+Currently not compatible with EasyScoreboards.
 
-Glow effect seems to flicker on and off when using certain Sponge builds.
-
-## Known Bugs with Mods
-
+## Mod Conflicts
 The glow effect will not work while wearing a Draconic Helmet.

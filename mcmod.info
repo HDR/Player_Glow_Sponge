@@ -1,0 +1,17 @@
+[
+    {
+        "modid": "playerglow",
+        "name": "PlayerGlow",
+        "version": "1.2",
+        "description": "Allows Players to Glow",
+        "authorList": [
+            "HDR"
+        ],
+        "dependencies": [
+            "spongeapi@6.0.0"
+        ],
+        "requiredMods": [
+            "spongeapi@6.0.0"
+        ]
+    }
+]
