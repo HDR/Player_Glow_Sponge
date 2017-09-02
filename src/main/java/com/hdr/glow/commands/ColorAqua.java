@@ -12,15 +12,15 @@ import org.spongepowered.api.entity.living.player.Player;
 
 public class ColorAqua implements CommandExecutor {
 
-    @Override
-    public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-        if (src instanceof Player) {
-            Player player = (Player) src;
-            String uuid = player.getUniqueId().toString();
-            String color = "Aqua";
-            FileManager.ColorData.addProperty(uuid, color);
-            GlowRegistry.getInstance().addToGlowTeam(GlowColors.AQUA, player);
-        }
-        return CommandResult.success();
-    }
+	@Override
+	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+		if (src instanceof Player) {
+			Player player = (Player) src;
+			String uuid = player.getUniqueId().toString();
+			String color = "Aqua";
+			FileManager.ColorData.addProperty(uuid, color);
+			GlowRegistry.getInstance().addToGlowTeam(GlowColors.AQUA, player);
+		}
+		return CommandResult.success();
+	}
 }
