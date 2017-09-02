@@ -1,4 +1,4 @@
-# Player Glow
+# Player Glow - Sponge
 A simple plugin that adds a glowing outline in various colors to players.
 
 
@@ -41,7 +41,7 @@ glow.color.yellow | Allows usage of Yellow outline
 glow.color.white | Allows usage of White outline
 
 ## Plugin Conflicts
-Currently not compatible with EasyScoreboards
+Currently not compatible with EasyScoreboards.
 
 ## Mod Conflicts
 The glow effect will not work while wearing a Draconic Helmet.
