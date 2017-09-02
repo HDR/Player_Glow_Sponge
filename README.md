@@ -40,8 +40,8 @@ glow.color.lightpurple | Allows usage of Light Purple outline
 glow.color.yellow | Allows usage of Yellow outline
 glow.color.white | Allows usage of White outline
 
-## Known Bugs
+## Plugin Conflicts
 Currently not compatible with EasyScoreboards
 
-## Known Bugs with Mods
+## Mod Conflicts
 The glow effect will not work while wearing a Draconic Helmet.
