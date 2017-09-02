@@ -10,8 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileManager {
-
-	public static JsonObject ColorData;
+	public static JsonObject colorData;
 
 	public static void create(String name, String text) throws IOException {
 		File dir = PlayerGlow.getInstance().getConfigDir();
@@ -23,13 +22,14 @@ public class FileManager {
 	}
 
 	public static void createJson() {
-		String CreateString = "{}";
+		String createString = "{}";
 		File file = new File(PlayerGlow.getInstance().getConfigDir(), "colorData.json");
+
 		if (!file.exists()) {
 			try {
-				create("colorData.json", CreateString);
+				create("colorData.json", createString);
 			} catch (IOException e1) {
-				PlayerGlow.getInstance().getLogger().error("[PlayerGlow] Error writing config file!");
+				PlayerGlow.getInstance().getLogger().error("Error writing config file!");
 			}
 		}
 	}
@@ -38,9 +38,9 @@ public class FileManager {
 		JsonParser parser = new JsonParser();
 		try {
 			Object obj = parser.parse(new FileReader(new File(PlayerGlow.getInstance().getConfigDir(), "colorData.json")));
-			ColorData = (JsonObject) obj;
+			colorData = (JsonObject) obj;
 		} catch (IOException e2) {
-			PlayerGlow.getInstance().getLogger().error("[PlayerGlow] Error reading config file!");
+			PlayerGlow.getInstance().getLogger().error("Error reading config file!");
 		}
 	}
 }
