@@ -19,11 +19,11 @@ import java.util.HashMap;
 public class GlowRegistry {
 	private static GlowRegistry instance;
 	private Scoreboard scoreboard = Scoreboard.builder().build();
-	private HashMap<GlowColor, Team> teams = new HashMap<>();
+	private HashMap<GlowEffect, Team> teams = new HashMap<>();
 	private PotionEffect glowPot = PotionEffect.builder().potionType(PotionEffectTypes.GLOWING).duration(Integer.MAX_VALUE).amplifier(100).particles(false).ambience(true).build();
 
 	private GlowRegistry() {
-		for (GlowColor color : GlowColor.values()) {
+		for (GlowEffect color : GlowEffect.values()) {
 			TextColor textColor = color.getTextColor();
 			Team team = Team.builder().name(color.getTeam()).prefix(Text.of(new Object[]{textColor})).color(textColor).build();
 			team.setAllowFriendlyFire(true);
@@ -48,7 +48,7 @@ public class GlowRegistry {
 		p.setScoreboard(scoreboard);
 	}
 
-	public void addToGlowTeam(GlowColor color, Entity entity) {
+	public void addToGlowTeam(GlowEffect color, Entity entity) {
 		TeamMember t = (TeamMember) entity;
 		teams.get(color).addMember(t.getTeamRepresentation());
 		PotionEffectData effects = entity.getOrCreate(PotionEffectData.class).get();

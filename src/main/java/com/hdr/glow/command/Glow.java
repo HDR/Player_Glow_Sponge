@@ -1,6 +1,7 @@
 package com.hdr.glow.command;
 
-import com.hdr.glow.config.FileManager;
+import com.hdr.glow.PlayerGlow;
+import com.hdr.glow.util.GlowEffect;
 import com.hdr.glow.util.GlowRegistry;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
@@ -17,7 +18,7 @@ import org.spongepowered.api.text.format.TextStyles;
 
 import java.util.Optional;
 
-public class GlowColor implements CommandExecutor {
+public class Glow implements CommandExecutor {
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		if (src instanceof Player) {
@@ -28,8 +29,8 @@ public class GlowColor implements CommandExecutor {
 			if (value.isPresent()) {
 				String color = value.get();
 				if (player.hasPermission("glow.color." + color.toLowerCase())) {
-					FileManager.colorData.addProperty(uuid, color);
-					GlowRegistry.getInstance().addToGlowTeam(com.hdr.glow.util.GlowColor.valueOf(color), player);
+					PlayerGlow.getInstance().getFileManager().getColorData().addProperty(uuid, color);
+					GlowRegistry.getInstance().addToGlowTeam(GlowEffect.valueOf(color), player);
 				}
 			} else {
 				if (player.hasPermission("glow.toggle")) {

@@ -10,37 +10,46 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileManager {
-	public static JsonObject colorData;
+	private JsonObject colorData;
+	private String fileName;
 
-	public static void create(String name, String text) throws IOException {
+	public FileManager(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void create(String text) throws IOException {
 		File dir = PlayerGlow.getInstance().getConfigDir();
 		dir.mkdirs();
-		FileWriter file = new FileWriter(new File(dir, name));
+		FileWriter file = new FileWriter(new File(dir, fileName));
 		file.write(text);
 		file.flush();
 		file.close();
 	}
 
-	public static void createJson() {
+	public void createJson() {
 		String createString = "{}";
-		File file = new File(PlayerGlow.getInstance().getConfigDir(), "colorData.json");
+		File file = new File(PlayerGlow.getInstance().getConfigDir(), fileName);
 
 		if (!file.exists()) {
 			try {
-				create("colorData.json", createString);
+				create(createString);
 			} catch (IOException e1) {
 				PlayerGlow.getInstance().getLogger().error("Error writing config file!");
 			}
 		}
 	}
 
-	public static void readJson() {
+	public void readJson() {
 		JsonParser parser = new JsonParser();
 		try {
-			Object obj = parser.parse(new FileReader(new File(PlayerGlow.getInstance().getConfigDir(), "colorData.json")));
+			Object obj = parser.parse(new FileReader(new File(PlayerGlow.getInstance().getConfigDir(), fileName)));
 			colorData = (JsonObject) obj;
 		} catch (IOException e2) {
 			PlayerGlow.getInstance().getLogger().error("Error reading config file!");
 		}
+	}
+
+	public JsonObject getColorData() {
+		return colorData;
 	}
 }

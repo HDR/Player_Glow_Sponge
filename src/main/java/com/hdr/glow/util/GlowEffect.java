@@ -3,7 +3,7 @@ package com.hdr.glow.util;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
-public enum GlowColor {
+public enum GlowEffect {
 	BLACK("Black", TextColors.BLACK),
 	DARK_BLUE("DarkBlue", TextColors.DARK_BLUE),
 	DARK_GREEN("DarkGreen", TextColors.DARK_GREEN),
@@ -24,7 +24,7 @@ public enum GlowColor {
 	private final String team;
 	private final TextColor textColor;
 
-	GlowColor(String team, TextColor textColor) {
+	GlowEffect(String team, TextColor textColor) {
 		this.textColor = textColor;
 		this.team = team;
 	}
