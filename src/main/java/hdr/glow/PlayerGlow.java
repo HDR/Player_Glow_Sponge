@@ -16,7 +16,7 @@ import java.io.*;
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.0.1")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.1")
 public class PlayerGlow {
 
     public static Scoreboard scoreboard = Scoreboard.builder().build();
