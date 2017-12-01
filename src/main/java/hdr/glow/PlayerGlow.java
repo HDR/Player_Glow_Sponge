@@ -16,7 +16,7 @@ import java.io.*;
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.1")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.1.1")
 public class PlayerGlow {
 
     public static Scoreboard scoreboard = Scoreboard.builder().build();
@@ -123,6 +123,11 @@ public class PlayerGlow {
         String CreateString = "{}";
         File file = new File("config/playerglow/colorData.json");
         if (!file.exists()) {
+            try {
+                FileMethods.create("config/playerglow", "colorData.json", CreateString);
+            } catch (IOException e1) {}
+        }
+        if (file.length() == 0) {
             try {
                 FileMethods.create("config/playerglow", "colorData.json", CreateString);
             } catch (IOException e1) {}
