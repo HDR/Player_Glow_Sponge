@@ -17,7 +17,7 @@ public class GlowColor implements CommandExecutor {
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 
             PaginationList.builder()
-                    .title(Text.of(TextStyles.BOLD, TextColors.GREEN, "Player Glow 1.0.1 By HDR"))
+                    .title(Text.of(TextStyles.BOLD, TextColors.GREEN, "Player Glow 1.1.1 By HDR"))
                     .contents(Toggle, Black, DarkBlue, DarkGreen, DarkAqua, DarkRed, DarkPurple, Gold, Gray, DarkGray, Blue, Green, Aqua, Red, LightPurple, Yellow, White)
                     .padding(Text.of("="))
                     .sendTo(src);
