@@ -17,6 +17,7 @@ Command | Description
 
 ## Configurations
 Node | Options
+------------- | -------------
 AllowFriendlyFire | True/False
 Collision | Always/Never/PushOtherTeams/PushOwnTeam
 
