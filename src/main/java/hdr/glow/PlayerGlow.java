@@ -28,7 +28,7 @@ import java.nio.file.Path;
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.1.1")
+@Plugin(id = "playerglow", name = "Player Glow", version = "1.2.0")
 public class PlayerGlow {
 
     @Inject
