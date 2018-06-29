@@ -2,36 +2,81 @@ package hdr.glow;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hdr.glow.config.FileMethods;
+import com.google.inject.Inject;
+import hdr.glow.config.Utils;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.commented.CommentedConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
+import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.SaveWorldEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.scoreboard.CollisionRule;
+import org.spongepowered.api.scoreboard.CollisionRules;
 import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.text.Text;
+
 import java.io.*;
+import java.nio.file.Path;
+
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
 @Plugin(id = "playerglow", name = "Player Glow", version = "1.1.1")
 public class PlayerGlow {
 
+    @Inject
+    @DefaultConfig(sharedRoot = true)
+    private File defaultConfig;
+
+    @Inject
+    @DefaultConfig(sharedRoot = true)
+    private ConfigurationLoader<CommentedConfigurationNode> configManager;
+
+    @Inject
+    @ConfigDir(sharedRoot = false)
+    private Path privateConfigDir;
+
     public static Scoreboard scoreboard = Scoreboard.builder().build();
     public static JsonObject ColorData;
-    private void makeCommands() {Sponge.getCommandManager().register(this, colorCMD, "glow");}
-
-    @Listener
-    public void onInit(GameStartedServerEvent e) {
-        createJson();
-        readJson();
-        makeCommands();
+    private void makeCommands() {
+        Sponge.getCommandManager().register(this, colorCMD, "glow");
     }
 
     @Listener
-    public void onServerStart(GameStartedServerEvent e) {registerTeams();}
+    public void onInit(GameInitializationEvent e) {
+
+    }
+
+    @Listener
+    public void onServerStart(GameStartedServerEvent e) {
+        registerTeams();
+        createJson();
+        readJson();
+        makeCommands();
+
+        ConfigurationNode config;
+        try {
+            if (!defaultConfig.exists()) {
+                defaultConfig.createNewFile();
+                config = configManager.load();
+                config.getNode("AllowFriendlyFire").setValue(false);
+                config.getNode("Collision").setValue("Always");
+                config.getNode("SeeFriendlyInvisible").setValue(false);
+                configManager.save(config);
+            }
+            ConfigureTeams();
+
+        } catch (IOException exception) {
+            System.out.println("The default configuration could not be loaded or created!");
+        }
+    }
 
     @Listener
     public void onJoin(ClientConnectionEvent.Join e) {
@@ -114,9 +159,8 @@ public class PlayerGlow {
     public void onSave(SaveWorldEvent e) {
         String jstring = ColorData.toString();
         try {
-            FileMethods.create("config/playerglow", "colorData.json", jstring);
-        } catch (IOException e1) {
-        }
+            Utils.create("config/playerglow", "colorData.json", jstring);
+        } catch (IOException ignore) {}
     }
 
     private static void createJson() {
@@ -124,13 +168,13 @@ public class PlayerGlow {
         File file = new File("config/playerglow/colorData.json");
         if (!file.exists()) {
             try {
-                FileMethods.create("config/playerglow", "colorData.json", CreateString);
-            } catch (IOException e1) {}
+                Utils.create("config/playerglow", "colorData.json", CreateString);
+            } catch (IOException ignore) {}
         }
         if (file.length() == 0) {
             try {
-                FileMethods.create("config/playerglow", "colorData.json", CreateString);
-            } catch (IOException e1) {}
+                Utils.create("config/playerglow", "colorData.json", CreateString);
+            } catch (IOException ignore) {}
         }
     }
 
@@ -139,6 +183,87 @@ public class PlayerGlow {
         try {
             Object obj = parser.parse(new FileReader("config/playerglow/colorData.json"));
             ColorData = (JsonObject) obj;
-        } catch (IOException e2) {}
+        } catch (IOException ignore) {}
+    }
+
+    private void ConfigureTeams() {
+        try {
+            ConfigurationNode config = configManager.load();
+
+            //Friendly Fire
+            Black.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkBlue.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkGreen.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkAqua.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkRed.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkPurple.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Gold.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Gray.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            DarkGray.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Blue.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Green.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Aqua.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Red.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            LightPurple.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Yellow.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            White.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+
+            //Collision
+            String collision = config.getNode("Collision").getString().toLowerCase();
+            switch(collision) {
+                case "always":
+                    SetCollisionType(CollisionRules.ALWAYS);
+                    break;
+                case "never":
+                    SetCollisionType(CollisionRules.NEVER);
+                    break;
+                case "pushotherteams":
+                    SetCollisionType(CollisionRules.PUSH_OTHER_TEAMS);
+                    break;
+                case "pushownteam":
+                    SetCollisionType(CollisionRules.PUSH_OWN_TEAM);
+                    break;
+                default: break;
+            }
+
+            //Invisible
+            Black.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkBlue.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkGreen.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkAqua.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkRed.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkPurple.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Gold.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Gray.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            DarkGray.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Blue.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Green.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Aqua.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Red.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            LightPurple.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Yellow.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            White.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+
+        } catch (IOException ignore) {}
+
+    }
+
+    private void SetCollisionType(CollisionRule rule){
+        Black.setCollisionRule(rule);
+        DarkBlue.setCollisionRule(rule);
+        DarkGreen.setCollisionRule(rule);
+        DarkAqua.setCollisionRule(rule);
+        DarkRed.setCollisionRule(rule);
+        DarkPurple.setCollisionRule(rule);
+        Gold.setCollisionRule(rule);
+        Gray.setCollisionRule(rule);
+        DarkGray.setCollisionRule(rule);
+        Blue.setCollisionRule(rule);
+        Green.setCollisionRule(rule);
+        Aqua.setCollisionRule(rule);
+        Red.setCollisionRule(rule);
+        LightPurple.setCollisionRule(rule);
+        Yellow.setCollisionRule(rule);
+        White.setCollisionRule(rule);
     }
 }

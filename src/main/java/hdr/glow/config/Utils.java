@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileMethods {
+public class Utils {
     public static void create(String path, String name, String text) throws IOException {
         File dir = new File(path);
         dir.mkdirs();
