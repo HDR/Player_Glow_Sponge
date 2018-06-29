@@ -15,6 +15,11 @@ Command | Description
 /glow toggle | toggles glow
 /glow colorname | sets glow color
 
+## Configurations
+Node | Options
+AllowFriendlyFire | True/False
+Collision | Always/Never/PushOtherTeams/PushOwnTeam
+
 ## Video
 
 [![Video](https://img.youtube.com/vi/YROZiNkBh1E/0.jpg)](https://www.youtube.com/watch?v=YROZiNkBh1E)
