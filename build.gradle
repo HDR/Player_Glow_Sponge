@@ -22,5 +22,5 @@ sponge {
 }
 
 dependencies {
-    compile 'org.spongepowered:spongeapi:7.0.0-20170916.165320-38'
+    compile 'org.spongepowered:spongeapi:7.0.0'
 }
