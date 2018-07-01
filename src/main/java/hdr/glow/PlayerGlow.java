@@ -9,26 +9,30 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.config.DefaultConfig;
+import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
+import org.spongepowered.api.effect.potion.PotionEffectTypes;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.entity.RideEntityEvent;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.SaveWorldEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.scoreboard.CollisionRule;
-import org.spongepowered.api.scoreboard.CollisionRules;
-import org.spongepowered.api.scoreboard.Scoreboard;
+import org.spongepowered.api.scoreboard.*;
 import org.spongepowered.api.text.Text;
 
 import java.io.*;
 import java.nio.file.Path;
 
+import static hdr.glow.config.GlowStrings.glowPot;
 import static hdr.glow.config.GlowTeams.*;
 import static hdr.glow.commands.CommandList.*;
 
-@Plugin(id = "playerglow", name = "Player Glow", version = "1.2.0")
+@Plugin(id = "playerglow", name = "Player Glow")
 public class PlayerGlow {
 
     @Inject
@@ -66,9 +70,10 @@ public class PlayerGlow {
             if (!defaultConfig.exists()) {
                 defaultConfig.createNewFile();
                 config = configManager.load();
-                config.getNode("AllowFriendlyFire").setValue(false);
-                config.getNode("Collision").setValue("Always");
-                config.getNode("SeeFriendlyInvisible").setValue(false);
+                config.getNode("Allow Friendly Fire").setValue(false);
+                config.getNode("Team Collision").setValue("Always");
+                config.getNode("See Friendly Invisible Players").setValue(false);
+                config.getNode("Mounts glow with player").setValue(true);
                 configManager.save(config);
             }
             ConfigureTeams();
@@ -77,6 +82,35 @@ public class PlayerGlow {
             System.out.println("The default configuration could not be loaded or created!");
         }
     }
+
+    @Listener
+    public void onMount(RideEntityEvent.Mount event, @First Player player) {
+        try {
+            if (configManager.load().getNode("Mounts glow with player").getBoolean()) {
+                Entity entity = event.getTargetEntity();
+                PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
+                scoreboard.getMemberTeam(Text.of(player.getName())).get().addMember(Text.of(entity.getUniqueId()));
+                effects.addElement(glowPot);
+                entity.offer(effects);
+            }
+        } catch (IOException ignore) {}
+    }
+
+    @Listener
+    public void onDismount(RideEntityEvent.Dismount event, @First Player player) {
+        try {
+            if (configManager.load().getNode("Mounts glow with player").getBoolean()) {
+                Entity entity = event.getTargetEntity();
+                PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
+                if (effects.asList().stream().anyMatch(pot -> pot.getType().equals(PotionEffectTypes.GLOWING))) {
+                    effects.removeAll(pot -> pot.getType().equals(PotionEffectTypes.GLOWING));
+                    entity.offer(effects);
+                }
+            }
+        } catch (IOException ignore) {}
+    }
+
+
 
     @Listener
     public void onJoin(ClientConnectionEvent.Join e) {
@@ -152,6 +186,8 @@ public class PlayerGlow {
                     break;
                 default: break;
             }
+        } else {
+            Default.addMember(Text.of(player.getName()));
         }
     }
 
@@ -191,25 +227,26 @@ public class PlayerGlow {
             ConfigurationNode config = configManager.load();
 
             //Friendly Fire
-            Black.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkBlue.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkGreen.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkAqua.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkRed.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkPurple.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Gold.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Gray.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            DarkGray.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Blue.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Green.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Aqua.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Red.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            LightPurple.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            Yellow.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
-            White.setAllowFriendlyFire(config.getNode("AllowFriendlyFire").getBoolean());
+            Black.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkBlue.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkGreen.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkAqua.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkRed.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkPurple.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Gold.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Gray.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            DarkGray.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Blue.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Green.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Aqua.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Red.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            LightPurple.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Yellow.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            White.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
+            Default.setAllowFriendlyFire(config.getNode("Allow Friendly Fire").getBoolean());
 
             //Collision
-            String collision = config.getNode("Collision").getString().toLowerCase();
+            String collision = config.getNode("Team Collision").getString().toLowerCase();
             switch(collision) {
                 case "always":
                     SetCollisionType(CollisionRules.ALWAYS);
@@ -227,22 +264,23 @@ public class PlayerGlow {
             }
 
             //Invisible
-            Black.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkBlue.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkGreen.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkAqua.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkRed.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkPurple.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Gold.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Gray.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            DarkGray.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Blue.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Green.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Aqua.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Red.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            LightPurple.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            Yellow.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
-            White.setCanSeeFriendlyInvisibles(config.getNode("SeeFriendlyInvisible").getBoolean());
+            Black.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkBlue.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkGreen.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkAqua.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkRed.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkPurple.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Gold.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Gray.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            DarkGray.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Blue.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Green.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Aqua.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Red.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            LightPurple.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Yellow.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            White.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
+            Default.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
 
         } catch (IOException ignore) {}
 
@@ -265,5 +303,6 @@ public class PlayerGlow {
         LightPurple.setCollisionRule(rule);
         Yellow.setCollisionRule(rule);
         White.setCollisionRule(rule);
+        Default.setCollisionRule(rule);
     }
 }

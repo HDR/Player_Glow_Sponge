@@ -23,6 +23,7 @@ public class GlowTeams {
     public static Team LightPurple = Team.builder().name("Pink").prefix(Text.of(TextColors.LIGHT_PURPLE)).color(TextColors.LIGHT_PURPLE).build();
     public static Team Yellow = Team.builder().name("Yellow").prefix(Text.of(TextColors.YELLOW)).color(TextColors.YELLOW).build();
     public static Team White = Team.builder().name("White").prefix(Text.of(TextColors.WHITE)).color(TextColors.WHITE).build();
+    public static Team Default = Team.builder().name("Default").build();
 
     public static void registerTeams(){
         scoreboard.registerTeam(Black);
@@ -41,5 +42,6 @@ public class GlowTeams {
         scoreboard.registerTeam(LightPurple);
         scoreboard.registerTeam(Yellow);
         scoreboard.registerTeam(White);
+        scoreboard.registerTeam(Default);
     }
 }
