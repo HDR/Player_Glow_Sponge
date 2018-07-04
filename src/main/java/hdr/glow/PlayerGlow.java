@@ -1,13 +1,13 @@
 package hdr.glow;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.inject.Inject;
-import hdr.glow.config.Utils;
+import hdr.glow.core.*;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
-import org.spongepowered.api.config.ConfigDir;
+import org.spongepowered.api.command.args.GenericArguments;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
@@ -16,7 +16,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.entity.RideEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.SaveWorldEvent;
@@ -24,13 +23,15 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.*;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
-import java.io.*;
-import java.nio.file.Path;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 
-import static hdr.glow.config.GlowStrings.glowPot;
-import static hdr.glow.config.GlowTeams.*;
-import static hdr.glow.commands.CommandList.*;
+import static hdr.glow.GlowColor.isGlowing;
+import static hdr.glow.core.GlowCore.*;
+
 
 @Plugin(id = "playerglow", name = "Player Glow")
 public class PlayerGlow {
@@ -43,27 +44,31 @@ public class PlayerGlow {
     @DefaultConfig(sharedRoot = true)
     private ConfigurationLoader<CommentedConfigurationNode> configManager;
 
-    @Inject
-    @ConfigDir(sharedRoot = false)
-    private Path privateConfigDir;
-
-    public static Scoreboard scoreboard = Scoreboard.builder().build();
+    public static final Scoreboard scoreboard = Scoreboard.builder().build();
     public static JsonObject ColorData;
-    private void makeCommands() {
-        Sponge.getCommandManager().register(this, colorCMD, "glow");
-    }
-
-    @Listener
-    public void onInit(GameInitializationEvent e) {
-
-    }
 
     @Listener
     public void onServerStart(GameStartedServerEvent e) {
-        registerTeams();
-        createJson();
-        readJson();
-        makeCommands();
+        GlowCore.registerTeams();
+        Utils.createJson();
+        Utils.readJson();
+
+        HashMap<String, String> choices = new HashMap<>();
+
+        for (GlowEffect color : GlowEffect.values()) {
+            choices.put(color.getTeam(), color.name());
+        }
+
+        CommandSpec glow = CommandSpec.builder()
+                .description(Text.of(TextColors.GREEN, "Change colors or toggle your glow effect"))
+                .permission("glow.menu")
+                .arguments(
+                        GenericArguments.optional(GenericArguments.choices(Text.of("color"), choices))
+                )
+                .executor(new GlowColor())
+                .build();
+
+        Sponge.getCommandManager().register(this, glow, "glow");
 
         ConfigurationNode config;
         try {
@@ -85,13 +90,16 @@ public class PlayerGlow {
 
     @Listener
     public void onMount(RideEntityEvent.Mount event, @First Player player) {
+        PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
         try {
             if (configManager.load().getNode("Mounts glow with player").getBoolean()) {
-                Entity entity = event.getTargetEntity();
-                PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
-                scoreboard.getMemberTeam(Text.of(player.getName())).get().addMember(Text.of(entity.getUniqueId()));
-                effects.addElement(glowPot);
-                entity.offer(effects);
+                if (isGlowing(effects)) {
+                    Entity entity = event.getTargetEntity();
+                    String color = ColorData.get(player.getUniqueId().toString()).getAsString();
+                    GlowRegistry.getInstance().addToGlowTeam(GlowEffect.valueOf(color), entity);
+                    effects.addElement(GlowRegistry.getInstance().getGlowPotionEffect());
+                    entity.offer(effects);
+                }
             }
         } catch (IOException ignore) {}
     }
@@ -100,92 +108,24 @@ public class PlayerGlow {
     public void onDismount(RideEntityEvent.Dismount event, @First Player player) {
         try {
             if (configManager.load().getNode("Mounts glow with player").getBoolean()) {
-                Entity entity = event.getTargetEntity();
                 PotionEffectData effects = player.getOrCreate(PotionEffectData.class).get();
-                if (effects.asList().stream().anyMatch(pot -> pot.getType().equals(PotionEffectTypes.GLOWING))) {
-                    effects.removeAll(pot -> pot.getType().equals(PotionEffectTypes.GLOWING));
-                    entity.offer(effects);
-                }
+                Entity entity = event.getTargetEntity();
+                effects.removeAll(pot -> pot.getType().equals(PotionEffectTypes.GLOWING));
+                entity.offer(effects);
             }
         } catch (IOException ignore) {}
     }
 
-
-
     @Listener
     public void onJoin(ClientConnectionEvent.Join e) {
         Player player = e.getTargetEntity();
-        player.setScoreboard(scoreboard);
+        GlowRegistry.getInstance().setGlowScoreboard(player);
         String PlayerID = player.getUniqueId().toString();
+
         if (ColorData.has(PlayerID)) {
-            String PlayerColor = ColorData.get(PlayerID).getAsString();
-            switch(PlayerColor) {
-                case "Aqua":
-                    Aqua.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Aqua");
-                    break;
-                case "Black":
-                    Black.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Black");
-                    break;
-                case "Blue":
-                    Blue.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Blue");
-                    break;
-                case "DarkAqua":
-                    DarkAqua.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkAqua");
-                    break;
-                case "DarkBlue":
-                    DarkBlue.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkBlue");
-                    break;
-                case "DarkGray":
-                    DarkGray.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkGray");
-                    break;
-                case "DarkGreen":
-                    DarkGreen.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkGreen");
-                    break;
-                case "DarkPurple":
-                    DarkPurple.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkPurple");
-                    break;
-                case "DarkRed":
-                    DarkRed.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "DarkRed");
-                    break;
-                case "Gold":
-                    Gold.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Gold");
-                    break;
-                case "Gray":
-                    Gray.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Gray");
-                    break;
-                case "Green":
-                    Green.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Green");
-                    break;
-                case "LightPurple":
-                    LightPurple.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "LightPurple");
-                    break;
-                case "Red":
-                    Red.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Red");
-                    break;
-                case "White":
-                    White.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "White");
-                    break;
-                case "Yellow":
-                    Yellow.addMember(Text.of(player.getName()));
-                    ColorData.addProperty(PlayerID, "Yellow");
-                    break;
-                default: break;
-            }
+            String color = ColorData.get(PlayerID).getAsString();
+            GlowRegistry.getInstance().addToGlowTeam(GlowEffect.valueOf(color), player);
+            ColorData.addProperty(PlayerID, color);
         } else {
             Default.addMember(Text.of(player.getName()));
         }
@@ -196,29 +136,6 @@ public class PlayerGlow {
         String jstring = ColorData.toString();
         try {
             Utils.create("config/playerglow", "colorData.json", jstring);
-        } catch (IOException ignore) {}
-    }
-
-    private static void createJson() {
-        String CreateString = "{}";
-        File file = new File("config/playerglow/colorData.json");
-        if (!file.exists()) {
-            try {
-                Utils.create("config/playerglow", "colorData.json", CreateString);
-            } catch (IOException ignore) {}
-        }
-        if (file.length() == 0) {
-            try {
-                Utils.create("config/playerglow", "colorData.json", CreateString);
-            } catch (IOException ignore) {}
-        }
-    }
-
-    private static void readJson() {
-        JsonParser parser = new JsonParser();
-        try {
-            Object obj = parser.parse(new FileReader("config/playerglow/colorData.json"));
-            ColorData = (JsonObject) obj;
         } catch (IOException ignore) {}
     }
 
@@ -247,7 +164,7 @@ public class PlayerGlow {
 
             //Collision
             String collision = config.getNode("Team Collision").getString().toLowerCase();
-            switch(collision) {
+            switch (collision) {
                 case "always":
                     SetCollisionType(CollisionRules.ALWAYS);
                     break;
@@ -260,7 +177,8 @@ public class PlayerGlow {
                 case "pushownteam":
                     SetCollisionType(CollisionRules.PUSH_OWN_TEAM);
                     break;
-                default: break;
+                default:
+                    break;
             }
 
             //Invisible
@@ -282,11 +200,12 @@ public class PlayerGlow {
             White.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
             Default.setCanSeeFriendlyInvisibles(config.getNode("See Friendly Invisible Players").getBoolean());
 
-        } catch (IOException ignore) {}
+        } catch (IOException ignore) {
+        }
 
     }
 
-    private void SetCollisionType(CollisionRule rule){
+    private void SetCollisionType(CollisionRule rule) {
         Black.setCollisionRule(rule);
         DarkBlue.setCollisionRule(rule);
         DarkGreen.setCollisionRule(rule);
